@@ -8,6 +8,12 @@ In your R console, please add the following line:
 devtools::install_github("adrianArimany/mypackageR")
 ```
 
+then in your R script add the following:
+
+```
+library(mypackageR)
+```
+
 If it gives an error, the issue is likely because you don't have devtools, install, in such case:
 
 ```
@@ -35,3 +41,7 @@ Here you can find the following files:
   These are the packages about doing graphs in R
 * functions_linearRegression.R
   These are the packages about doing linear regression in R
+
+
+### How to update:
+
