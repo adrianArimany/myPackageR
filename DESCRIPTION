@@ -1,11 +1,12 @@
 Package: myPackage
-Title: Personal functions that are used to do statistics 
-Version: 1
+Type: Package
+Title: Personal Functions for Statistics and Graphing
+Version: 1.0.0
 Authors@R: 
-    person("Adrian", "Arimany", , "ari211063@uvg.edu.gt", role = c("author", "manager"))
-Description: This package contains personal function for general R usage, linearRegression, and making graphs.
-License: use_mit_license()
-    license
+    person("Adrian", "Arimany", email = "ari211063@uvg.edu.gt", role = c("aut", "cre"))
+Description: This package contains personal functions for general R usage, linear regression, and graphing.
+License: MIT + file LICENSE
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
