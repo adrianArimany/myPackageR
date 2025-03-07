@@ -2,22 +2,10 @@
 % Please edit documentation in R/functions_anova.R
 \name{SSB}
 \alias{SSB}
-\title{Compute Sum of Squares Between Treatments (SSB)}
+\title{sum of squares between treatments.}
 \usage{
 SSB(df, treatment_col, value_col, message = FALSE)
 }
-\arguments{
-\item{df}{A dataframe containing the dataset.}
-
-\item{treatment_col}{A character string specifying the treatment column.}
-
-\item{value_col}{A character string specifying the dependent variable column.}
-
-\item{message}{A logical indicating whether to print the result.}
-}
-\value{
-The SSB value.
-}
 \description{
-Computes the sum of squares between treatments for ANOVA.
+sum of squares between treatments.
 }

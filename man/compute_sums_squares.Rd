@@ -2,16 +2,10 @@
 % Please edit documentation in R/functions_linearRegression.R
 \name{compute_sums_squares}
 \alias{compute_sums_squares}
-\title{Compute Sum of Squares for a Linear Model}
+\title{computes the sum squares for a model}
 \usage{
 compute_sums_squares(model)
 }
-\arguments{
-\item{model}{A linear model object (\code{lm}).}
-}
-\value{
-A list with SST, SSR, and SSE.
-}
 \description{
-Computes SST (Total Sum of Squares), SSR (Regression Sum of Squares), and SSE (Error Sum of Squares).
+computes the sum squares for a model
 }
