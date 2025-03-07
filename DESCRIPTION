@@ -1,0 +1,11 @@
+Package: myPackage
+Title: Personal functions that are used to do statistics 
+Version: 1
+Authors@R: 
+    person("Adrian", "Arimany", , "ari211063@uvg.edu.gt", role = c("author", "manager"))
+Description: This package contains personal function for general R usage, linearRegression, and making graphs.
+License: use_mit_license()
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
