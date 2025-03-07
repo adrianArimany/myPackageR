@@ -43,5 +43,42 @@ Here you can find the following files:
   These are the packages about doing linear regression in R
 
 
-### How to update:
+### How to update (self-note):
 
+In r console:
+
+```
+devtools::document()
+```
+
+In description change the version
+
+Version: X.Y.Z
+
+Where:
+
+X : Major update
+
+Y : Medium update
+
+Z : Small updates
+
+
+In terminal:
+
+```
+git add .
+git commit -m "Updated package: added new function X, fixed bug Y"
+git push origin main
+```
+In r console:
+```
+devtools::install_github("adrianArimany/mypackageR", force = TRUE)
+```
+
+To verify version:
+In r console
+```
+library(mypackageR)
+packageVersion("mypackageR")
+```
