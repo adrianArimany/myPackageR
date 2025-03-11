@@ -1,4 +1,8 @@
 #' sum of squares between treatments.
+#' @param df the data frame.
+#' @param treatment_col the column with the treatment names
+#' @param value_col the column with the values.
+#' @param message TRUE if you want to see the result, FALSE if the you don't want the result.
 #' @export
 SSB <- function(df, treatment_col, value_col, message = FALSE) {
   warning("Is require that all the groups have the same sample size \n")
@@ -27,6 +31,10 @@ SSB <- function(df, treatment_col, value_col, message = FALSE) {
 }
 
 #' mean square between treatments.
+#' @param df the data frame.
+#' @param treatment_col the column with the treatment names
+#' @param value_col the column with the values.
+#' @param message TRUE if you want to see the result, FALSE if the you don't want the result. 
 #' @export
 MSB <- function(df, treatment_col, value_col, message = FALSE) {
   #Computes the SSB with the SSB function
@@ -53,6 +61,10 @@ MSB <- function(df, treatment_col, value_col, message = FALSE) {
 }
 
 #'Compute the sum of squares due to error (SSE)
+#' @param df the data frame.
+#' @param treatment_col the column with the treatment names
+#' @param value_col the column with the values.
+#' @param message TRUE if you want to see the result, FALSE if the you don't want the result.
 #' @export
 SSE <- function(df, treatment_col, value_col, message = FALSE) {
   warning("It is required that all groups have the same sample size \n")
@@ -78,7 +90,11 @@ SSE <- function(df, treatment_col, value_col, message = FALSE) {
   }
 }
 
-#'Mean Square error MSE
+#' Mean Square error MSE
+#' @param df the data frame.
+#' @param treatment_col the column with the treatment names
+#' @param value_col the column with the values.
+#' @param message TRUE if you want to see the result, FALSE if the you don't want the result.
 #' @export
 MSE <- function(df, treatment_col, value_col, message = FALSE) {
   # Ensure no missing values in treatment_col (debugging)
@@ -110,7 +126,65 @@ MSE <- function(df, treatment_col, value_col, message = FALSE) {
   }
 }
 
+#' manual creation of Anova test.
+#' @description
+#' Manually creates the table for the anova table using the defined parameters. 
+#' @param SST the total sum of squares
+#' @param SSR the total sum of error squares
+#' @param nT the total number of observations for every treatment
+#' @param k the number of levels or factors in the treatment
+#' @param alpha the rejection level
+#' @param message False if you want the conclusion hypothesis, TRUE if you you don't want the conclusion hypothesis. 
+#' @returns The Anova table or the conclusion for the hypothesis.
+#' @export
+anova_test_manual <- function(SST, SSTR, nT, k, alpha = 0.05, message = FALSE) {
+  # Determines the Degrees of Freedom
+  DF_Total <- nT - 1 
+  DF_Treatment <- k - 1
+  DF_Error <- DF_Total - DF_Treatment
+  
+  # Determines Sum of Squares for Error
+  SSE <- SST - SSTR
+  
+  # Determines Mean Squares
+  MS_Treatment <- SSTR / DF_Treatment
+  MS_Error <- SSE / DF_Error
+  
+  # F-Ratio
+  F_value <- MS_Treatment / MS_Error
+  
+  # Compute p-value via an F-test
+  p_value <- pf(F_value, DF_Treatment, DF_Error, lower.tail = FALSE)
+  
+  # Display ANOVA Table
+  anova_table <- data.frame(
+    Source = c("Treatment", "Error", "Total"),
+    SS = c(SSTR, SSE, SST),
+    DF = c(DF_Treatment, DF_Error, DF_Total),
+    MS = c(MS_Treatment, MS_Error, NA),
+    F = c(F_value, NA, NA),
+    p_value = c(p_value, NA, NA)
+  )
+  
+  if (message) {
+    print(anova_table)
+    if (p_value < alpha) {
+      cat("\nConclution: Reject the null hypothesis. There is a significant difference between the treatment means.\n")
+    } else {
+      cat("\nConclution: Fail to reject the null hypothesis. No significant difference detected between the treatment means.\n")
+    }
+  } else {
+    print(anova_table)  
+  }
+  
+}
+
+
+
 #' Anova with just one factor.
+#' @param df data frame
+#' @param treatment_col the treatment coloumn's name (where the treatments name are)
+#' @param value_col the observations coloumn from the levels.
 #' @export
 singleAOV <- function(df, treatment_col, value_col, summary = FALSE) {
   warning("This function only works with a one way ANOVA \n")
@@ -128,3 +202,26 @@ singleAOV <- function(df, treatment_col, value_col, summary = FALSE) {
     return(model)  
   }
 } 
+
+#' Fisher Least Square Difference, direct confidence interval for two specific levels.
+#' @param name description
+#' @param group2 first group 
+#' @param alpha the confidence level for rejection.
+#' @param message TRUE if you want to see a message, FALSE if you just want the CI
+#' @export
+flsd_CI <- function(modelAnova, levelVar, group1, group2, alpha = 0.05, message = FALSE) {
+  lsd_result <- LSD.test(modelAnova, levelVar, alpha = alpha, console = FALSE)
+  
+  mean_diff <- abs(lsd_result$means[group1, "Value"] - lsd_result$means[group2, "Value"])
+  LSD_value <- lsd_result$statistics$LSD
+  
+  LCL <- mean_diff - LSD_value
+  UCL <- mean_diff + LSD_value
+  
+  if (message) {
+    cat("\n95% Confidence Interval for the Difference between Means:", "(", LCL, ",", UCL, ")\n")
+  } else {
+    return(c(LCL, UCL))  
+  }
+  
+}

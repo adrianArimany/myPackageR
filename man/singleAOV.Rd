@@ -6,6 +6,13 @@
 \usage{
 singleAOV(df, treatment_col, value_col, summary = FALSE)
 }
+\arguments{
+\item{df}{data frame}
+
+\item{treatment_col}{the treatment coloumn's name (where the treatments name are)}
+
+\item{value_col}{the observations coloumn from the levels.}
+}
 \description{
 Anova with just one factor.
 }
