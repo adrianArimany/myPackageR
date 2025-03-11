@@ -11,7 +11,7 @@ devtools::install_github("adrianArimany/mypackageR")
 then in your R script add the following:
 
 ```
-library(mypackageR)
+library(myPackage)
 ```
 
 If it gives an error, the issue is likely because you don't have devtools, install, in such case:
@@ -79,6 +79,6 @@ devtools::install_github("adrianArimany/mypackageR", force = TRUE)
 To verify version:
 In r console
 ```
-library(mypackageR)
+library(myPackage)
 packageVersion("mypackageR")
 ```
